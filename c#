@@ -1,0 +1,49 @@
+public class Persona
+    {
+        public Persona(int id, string name, string surname, DateTime dateBorn)
+        {
+            this.id = id;
+            Name = name;
+            Surname = surname;
+            DateBorn = dateBorn;
+        }
+
+        public int id { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public DateTime DateBorn { get; set; }
+    }
+    public class FamilyHead
+    {
+        public int id { get; set; }
+        public Persona Marito { get; set; }
+        public Persona Moglie { get; set; }
+
+        public string Address { get; set; }
+
+    }
+
+
+public  DbSet<Persona> TablePerson { get; set; }
+        public  DbSet<FamilyHead> TableFamilyHead { get; set; }
+        
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=localhost; Database=Famiglia2; User ID=sa; Password=sa;trusted_connection=true;");
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Persona>(e =>
+            {
+                e.ToTable("TablePerson");
+                e.HasKey(p => p.id);
+                e.Property(e => e.Name);
+                
+            });
+
+            modelBuilder.Entity<FamilyHead>(e =>
+            {
+                e.ToTable("TableFamilyHead");
+                ........
+            });
